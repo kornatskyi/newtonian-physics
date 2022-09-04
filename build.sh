@@ -14,7 +14,7 @@ if [ ! -f $FILES_HASHES ]; then
     touch $OUT_PATH/hashes.txt
 fi
 
-declare -a files_to_compile=()
+files_to_compile=()
 
 check_if_files_have_changed_from_the_last_time() {
     for path in $1/*; do
@@ -35,7 +35,7 @@ check_if_files_have_changed_from_the_last_time() {
                 # File $path changed
 
                 # add changed file to compile list
-                files_to_compile+=$path
+                files_to_compile+=($path)
                 # replace sleshes with \/ to make sed command work correctly
                 old=$(echo $path | sed 's/\//\\\//g')
                 new=$(echo $new_hash | sed 's/\//\\\//g')
@@ -55,12 +55,26 @@ check_if_files_have_changed_from_the_last_time() {
 
 check_if_files_have_changed_from_the_last_time $PROJECT_ROOT/src
 
+is_failed="false"
+
 echo "*******COMPILATION STAGE***********"
 # Compile files from the compile list
 for file_to_compile in ${files_to_compile[@]}; do
+    echo "Compiling"
     file_name=$(basename $file_to_compile .cpp)
-    g++ -Wall -Wextra -Werror -g -c $files_to_compile -o $OUT_PATH/$file_name.o
+    echo $file_to_compile
+    g++ -Wall -Wextra -Werror -g -c $file_to_compile -o $OUT_PATH/$file_name.o
+    if [[ $? -ne 0 ]]; then
+        echo "Failed"
+        is_failed="true"
+    fi
 done
+
+if [[ $is_failed = "true" ]]; then
+    fail
+    echo "" >$FILES_HASHES
+    exit 1
+fi
 
 echo "*******LINKING STAGE***********"
 # link files
