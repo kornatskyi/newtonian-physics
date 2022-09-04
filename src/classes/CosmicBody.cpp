@@ -1,34 +1,53 @@
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Graphics/CircleShape.hpp>
+#include <iostream>
+#include <cmath>
+
 #include "../../include/CosmicBody.hpp"
 
-CosmicBody::CosmicBody(float radius) : sf::CircleShape(radius)
-{
-    this->mass = mass;
-}
-
-CosmicBody::CosmicBody(float radius, float mass, float spedd)
+CosmicBody::CosmicBody(float radius, sf::Vector2f position)
 {
     this->setRadius(radius);
-    this->mass = mass;
-    this->speed = spedd;
+    this->position = position;
 }
+// CosmicBody::CosmicBody(float radius, float mass, float speed)
+// {
+//     this->setRadius(radius);
+//     this->mass = mass;
+//     this->speed = speed;
+// }
 
 void CosmicBody::setCenterPosition(sf::Vector2f position)
 {
-    float radius = this->getRadius();
-    this->setPosition(position.x - radius, position.y - radius);
+    this->position = position;
 }
-
 float CosmicBody::getMass()
 {
-    return mass;
+    return this->mass;
 }
-
-void CosmicBody::setSpeed(float spedd)
+void CosmicBody::setSpeed(float speed)
 {
-    this->speed = spedd;
+    this->speed = speed;
 }
-
 float CosmicBody::getSpeed()
 {
-    return speed;
+    return this->speed;
+}
+sf::Vector2f CosmicBody::getVelocity()
+{
+    return this->velocity;
+}
+void CosmicBody::setVelocity()
+{
+    this->velocity = velocity;
+}
+sf::Vector2f CosmicBody::getAcceleration()
+{
+    return this->acceleration;
+}
+void CosmicBody::setAcceleration(sf::Vector2f acceleration)
+{
+    this->acceleration = acceleration;
 }

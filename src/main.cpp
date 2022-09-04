@@ -9,24 +9,8 @@
 #include "../include/CosmicBody.hpp"
 #include "../include/SolarSystem.hpp"
 
-class Orbit : public sf::CircleShape
-{
-
-public:
-    Orbit(float radius = 0, std::size_t pointCount = 30) : sf::CircleShape(radius, pointCount)
-    {
-    }
-
-    void setCenterPosition(sf::Vector2f position)
-    {
-        float radius = this->getRadius();
-        this->setPosition(position.x - radius, position.y - radius);
-    }
-};
-
 int main()
 {
-
     sf::Event event;
 
     sf::Vector2u windowSize(800, 600);
@@ -38,18 +22,14 @@ int main()
 
     sf::Vector2f centerOfTheScreen(window.getSize().x / 2, window.getSize().y / 2);
 
-    CosmicBody sun(30.f);
-    sun.setCenterPosition(centerOfTheScreen);
+    sf::Vector2f sunPosition{30.f, 50.f};
 
-    CosmicBody planet(10.f);
+    // CosmicBody sun(30.f, sunPosition);
+    // sun.setCenterPosition(centerOfTheScreen);
 
-    sun.setFillColor(sf::Color::Red);
+    // CosmicBody planet(10.f);
 
-    Orbit orbit(100.f, 100);
-    orbit.setOutlineThickness(2.f);
-    orbit.setFillColor(sf::Color::Transparent);
-    orbit.setOutlineColor(sf::Color::White);
-    orbit.setCenterPosition(centerOfTheScreen);
+    // sun.setFillColor(sf::Color::Red);
 
     SolarSystem solarSystem;
 
@@ -88,40 +68,3 @@ int main()
 
     return 0;
 }
-
-// int main()
-// {
-//     sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-//     sf::CircleShape shape(100.f);
-
-//     sf::Clock clock; // starts the clock
-//     shape.setFillColor(sf::Color::Green);
-//     int iterator = 0;
-//     while (window.isOpen())
-//     {
-
-//         for (int i = 0; i < 1001; i++)
-//         {
-//             // std::cout << "takesome time" << std::endl;
-//             iterator++;
-//         }
-
-//         sf::Time elapsed1 = clock.getElapsedTime();
-//         std::cout << elapsed1.asSeconds() << std::endl;
-//         clock.restart();
-
-//         sf::Event event;
-//         while (window.pollEvent(event))
-//         {
-//             if (event.type == sf::Event::Closed)
-//                 window.close();
-//         }
-//         window.clear();
-//         window.draw(shape);
-//         window.display();
-
-//         clock.restart();
-//     }
-
-//     return 0;
-// }

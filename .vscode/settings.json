@@ -64,5 +64,5 @@
         "iomanip": "cpp",
         "sstream": "cpp"
     },
-    "C_Cpp.errorSquiggles": "Disabled"
+    "C_Cpp.intelliSenseEngineFallback": "Enabled"
 }
