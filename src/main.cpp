@@ -1,4 +1,3 @@
-
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
@@ -11,6 +10,10 @@
 
 int main()
 {
+
+    // Settings
+    const sf::Color BACKGROUND_COLOR = sf::Color(231, 222, 205);
+
     sf::Event event;
 
     sf::Vector2u windowSize(1500, 900);
@@ -24,15 +27,14 @@ int main()
 
     sf::Vector2f sunPosition{30.f, 50.f};
 
-    GravitationalSystem gravitySystem;
-    gravitySystem.setCenter(centerOfTheScreen);
+    GravitationalSystem gravitySystem(centerOfTheScreen);
 
     while (window.isOpen())
     {
         mousePosition = sf::Mouse::getPosition(window);
         gravitySystem.update();
 
-        window.clear(sf::Color::Black);
+        window.clear(BACKGROUND_COLOR);
         // window.draw(sun);
         // window.draw(planet);
         // window.draw(orbit);

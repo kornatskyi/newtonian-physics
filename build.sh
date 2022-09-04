@@ -80,6 +80,6 @@ echo "*******LINKING STAGE***********"
 # link files
 g++ -Wall -Wextra -Werror $OUT_PATH/*.o -o $OUT_PATH/programm \
     -L/usr/local/lib \
-    /usr/local/lib/libsfml-graphics.so \
-    /usr/local/lib/libsfml-window.so \
-    /usr/local/lib/libsfml-system.so
+    /usr/local/lib/libsfml-graphics-d.so \
+    /usr/local/lib/libsfml-window-d.so \
+    /usr/local/lib/libsfml-system-d.so

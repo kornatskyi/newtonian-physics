@@ -9,8 +9,8 @@
 class CosmicBody : public sf::CircleShape
 {
 public:
-    CosmicBody(float radius, sf::Vector2f position);
-    // CosmicBody(float radius, float mass, float speed);
+    // CosmicBody(float radius, sf::Vector2f position);
+    CosmicBody(float radius, float mass, float speed);
     void setCenterPosition(sf::Vector2f position);
     float getMass();
     void setSpeed(float speed);
@@ -25,5 +25,4 @@ private:
     float speed;
     sf::Vector2f velocity;
     sf::Vector2f acceleration;
-    sf::Vector2f position;
 };
