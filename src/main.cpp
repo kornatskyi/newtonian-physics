@@ -7,13 +7,13 @@
 #include <cmath>
 
 #include "../include/CosmicBody.hpp"
-#include "../include/SolarSystem.hpp"
+#include "../include/GravitationalSystem.hpp"
 
 int main()
 {
     sf::Event event;
 
-    sf::Vector2u windowSize(800, 600);
+    sf::Vector2u windowSize(1500, 900);
 
     sf::RenderWindow window(sf::VideoMode(windowSize.x, windowSize.y), "My window");
     window.setPosition(sf::Vector2i(2000, 50));
@@ -24,25 +24,19 @@ int main()
 
     sf::Vector2f sunPosition{30.f, 50.f};
 
-    // CosmicBody sun(30.f, sunPosition);
-    // sun.setCenterPosition(centerOfTheScreen);
-
-    // CosmicBody planet(10.f);
-
-    // sun.setFillColor(sf::Color::Red);
-
-    SolarSystem solarSystem;
+    GravitationalSystem gravitySystem;
+    gravitySystem.setCenter(centerOfTheScreen);
 
     while (window.isOpen())
     {
         mousePosition = sf::Mouse::getPosition(window);
-        solarSystem.update();
+        gravitySystem.update();
 
         window.clear(sf::Color::Black);
         // window.draw(sun);
         // window.draw(planet);
         // window.draw(orbit);
-        window.draw(solarSystem);
+        window.draw(gravitySystem);
 
         window.display();
 

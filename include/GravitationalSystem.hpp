@@ -8,13 +8,15 @@
 
 #include "../include/CosmicBody.hpp"
 
-class SolarSystem : public sf::Drawable, public sf::Transformable
+class GravitationalSystem : public sf::Drawable, public sf::Transformable
 {
 
 public:
-    SolarSystem();
+    GravitationalSystem();
 
     void update();
+
+    void setCenter(sf::Vector2f center);
 
 private:
     float distnceBetweenTwoPoints(sf::Vector2f point1, sf::Vector2f point2);
