@@ -1,16 +1,16 @@
 #include "../../include/CosmicBody.hpp"
 #include "../../include/GravitationalSystem.hpp"
 
-GravitationalSystem::GravitationalSystem(sf::Vector2f center) : body1(30.f, 10, 0), body2(30.f, 10, 0)
+GravitationalSystem::GravitationalSystem(sf::Vector2f center) : body1(30.f, 10), body2(30.f, 10)
 {
     this->center = center;
 
-    // Set bodies positions to the center of the system
-
     body1.setFillColor(sf::Color(105, 143, 63));
     body2.setFillColor(sf::Color(10, 18, 42));
-    setPositionOnA1DementionalPlot(-200.f, body1);
-    setPositionOnA1DementionalPlot(0.f, body2);
+    setPositionOnA1DimensionalPlot(-10.f, body1);
+    setPositionOnA1DimensionalPlot(0.f, body2);
+
+    body1.setVelocity(sf::Vector2f(1, 0));
 
     if (!font.loadFromFile("./assets/fonts/MesloLGS NF Regular.ttf"))
     {
@@ -31,9 +31,14 @@ GravitationalSystem::GravitationalSystem(sf::Vector2f center) : body1(30.f, 10, 
     seconds = 0;
 }
 
-void GravitationalSystem::setPositionOnA1DementionalPlot(float coordinate, CosmicBody &body)
+void GravitationalSystem::setPositionOnA1DimensionalPlot(float coordinate, CosmicBody &body)
 {
     body.setCenterPosition(sf::Vector2f(this->center.x + coordinate, this->center.y));
+}
+
+float GravitationalSystem::getPositionOnA1DimensionalPlot(CosmicBody &body)
+{
+    return body.getCenterPosition().x - this->center.x;
 }
 
 float GravitationalSystem::distnceBetweenTwoPoints(sf::Vector2f point1, sf::Vector2f point2)
@@ -48,8 +53,17 @@ float GravitationalSystem::calcForce(float m1, float m2, float r)
 
 void GravitationalSystem::update()
 {
+    deltaTime = clock.getElapsedTime();
+    clock.restart();
+    std::cout << deltaTime.asSeconds() << std::endl;
+    float body1DeltaDisplacement = deltaDisplacement(body1.getVelocity().x, deltaTime.asSeconds());
+    float body1XPosition = getPositionOnA1DimensionalPlot(body1);
+    setPositionOnA1DimensionalPlot(body1XPosition + body1DeltaDisplacement, body1);
 }
-
+float GravitationalSystem::deltaDisplacement(float speed, float time)
+{
+    return speed * time;
+}
 void GravitationalSystem::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     target.draw(body1, states);

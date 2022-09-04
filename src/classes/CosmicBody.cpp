@@ -7,34 +7,30 @@
 
 #include "../../include/CosmicBody.hpp"
 
-CosmicBody::CosmicBody(float radius, float mass, float speed)
+CosmicBody::CosmicBody(float radius, float mass)
 {
     this->setRadius(radius);
     this->mass = mass;
-    this->speed = speed;
 }
 
 void CosmicBody::setCenterPosition(sf::Vector2f newPosition)
 {
     this->setPosition(sf::Vector2f(newPosition.x - this->getRadius(), newPosition.y - this->getRadius()));
 }
+sf::Vector2f CosmicBody::getCenterPosition()
+{
+    return sf::Vector2f(this->getPosition().x + this->getRadius(), this->getPosition().y + this->getRadius());
+}
+
 float CosmicBody::getMass()
 {
     return this->mass;
-}
-void CosmicBody::setSpeed(float speed)
-{
-    this->speed = speed;
-}
-float CosmicBody::getSpeed()
-{
-    return this->speed;
 }
 sf::Vector2f CosmicBody::getVelocity()
 {
     return this->velocity;
 }
-void CosmicBody::setVelocity()
+void CosmicBody::setVelocity(sf::Vector2f velocity)
 {
     this->velocity = velocity;
 }

@@ -22,7 +22,16 @@ private:
     float distnceBetweenTwoPoints(sf::Vector2f point1, sf::Vector2f point2);
     float calcForce(float m1, float m2, float r);
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
-    void setPositionOnA1DementionalPlot(float coordinate, CosmicBody &body);
+
+    ////////////////////////////////////////////////////////////
+    /// @brief Sets possition in respect to the one dimensional axis. Relativly to its center (usualy it's the midle of the screen)
+    /// @param coordinate is the number on the axis where position of a body will be set
+    /// @param body reference to the body which position need to be set on the axis
+    ////////////////////////////////////////////////////////////
+    void setPositionOnA1DimensionalPlot(float coordinate, CosmicBody &body);
+
+    float getPositionOnA1DimensionalPlot(CosmicBody &body);
+    float deltaDisplacement(float speed, float time);
 
     CosmicBody body1;
     CosmicBody body2;
