@@ -7,28 +7,14 @@ GravitationalSystem::GravitationalSystem(sf::Vector2f center) : body1(30.f, 10),
 
     body1.setFillColor(sf::Color(105, 143, 63));
     body2.setFillColor(sf::Color(10, 18, 42));
-    setPositionOnA1DimensionalPlot(-10.f, body1);
+    setPositionOnA1DimensionalPlot(-50.f, body1);
     setPositionOnA1DimensionalPlot(0.f, body2);
 
-    body1.setVelocity(sf::Vector2f(1, 0));
-
-    if (!font.loadFromFile("./assets/fonts/MesloLGS NF Regular.ttf"))
-    {
-        std::cout << "Font not found" << std::endl;
-    }
-    planetSpeedText.setFont(font);
-    planetSpeedText.setCharacterSize(16);
-    planetSpeedText.setString("Hello world");
-    planetSpeedText.setFillColor(sf::Color::Red);
-
-    planetAccselerationText.setPosition(0.0f, 20.0f);
-    planetAccselerationText.setFont(font);
-    planetAccselerationText.setCharacterSize(16);
-    planetAccselerationText.setString("Hello world");
-    planetAccselerationText.setFillColor(sf::Color::Red);
+    body1.applyForce(sf::Vector2f(20.f, 15.f));
+    body2.applyForce(sf::Vector2f(10.f, -40.f));
 
     secondConunt = 0.0f;
-    seconds = 0;
+    seconds = 0.f;
 }
 
 void GravitationalSystem::setPositionOnA1DimensionalPlot(float coordinate, CosmicBody &body)
@@ -55,10 +41,14 @@ void GravitationalSystem::update()
 {
     deltaTime = clock.getElapsedTime();
     clock.restart();
-    std::cout << deltaTime.asSeconds() << std::endl;
-    float body1DeltaDisplacement = deltaDisplacement(body1.getVelocity().x, deltaTime.asSeconds());
-    float body1XPosition = getPositionOnA1DimensionalPlot(body1);
-    setPositionOnA1DimensionalPlot(body1XPosition + body1DeltaDisplacement, body1);
+
+    seconds += deltaTime.asSeconds();
+
+    informationDisplayer.setTextField("Seconds", "Seconds:" + std::to_string(seconds));
+
+    // call time dependent functions on the bodies to calculate it's characteristics
+    body1.functionOverTime(deltaTime.asSeconds());
+    body2.functionOverTime(deltaTime.asSeconds());
 }
 float GravitationalSystem::deltaDisplacement(float speed, float time)
 {
@@ -68,6 +58,7 @@ void GravitationalSystem::draw(sf::RenderTarget &target, sf::RenderStates states
 {
     target.draw(body1, states);
     target.draw(body2, states);
+    target.draw(informationDisplayer, states);
     // target.draw(planetSpeedText);
     // target.draw(planetAccselerationText);
 

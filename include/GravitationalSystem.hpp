@@ -6,7 +6,8 @@
 #include <iostream>
 #include <cmath>
 
-#include "../include/CosmicBody.hpp"
+#include "CosmicBody.hpp"
+#include "InformationDisplayer.hpp"
 
 class GravitationalSystem : public sf::Drawable, public sf::Transformable
 {
@@ -39,9 +40,9 @@ private:
     const float GRAVITY_CONSTANT = 0.00000000006674f;
     sf::Time deltaTime;
     sf::Clock clock;
-    sf::Font font;
     sf::Text planetSpeedText;
     sf::Text planetAccselerationText;
     float secondConunt;
-    int seconds;
+    float seconds;
+    ::InformationDisplayer informationDisplayer;
 };

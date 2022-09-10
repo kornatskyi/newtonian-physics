@@ -13,15 +13,22 @@ public:
     float getMass();
     void setSpeed(float speed);
     float getSpeed();
-    sf::Vector2f getVelocity();
     void setVelocity(sf::Vector2f velocity);
-    sf::Vector2f getAcceleration();
+    sf::Vector2f getVelocity();
     void setAcceleration(sf::Vector2f acceleration);
+    sf::Vector2f getAcceleration();
     void setCenterPosition(sf::Vector2f position);
     sf::Vector2f getCenterPosition();
+    void applyForce(sf::Vector2f force);
+    sf::Vector2f getForce();
+    void functionOverTime(float deltaTime);
+    void calculatePosition(float deltaTime);
+    void calculateVelocity(float deltaTime);
+    void calculateAcceleration();
 
 private:
     float mass;
     sf::Vector2f velocity;
     sf::Vector2f acceleration;
+    sf::Vector2f force; // force aplyied to this body
 };

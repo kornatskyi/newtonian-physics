@@ -42,3 +42,35 @@ void CosmicBody::setAcceleration(sf::Vector2f acceleration)
 {
     this->acceleration = acceleration;
 }
+
+void CosmicBody::applyForce(sf::Vector2f force)
+{
+    this->force = force;
+    calculateAcceleration();
+}
+
+void CosmicBody::functionOverTime(float deltaTime)
+{
+    calculatePosition(deltaTime);
+    calculateVelocity(deltaTime);
+}
+
+void CosmicBody::calculatePosition(float deltaTime)
+{
+    sf::Vector2f currentPosition = getPosition();
+
+    sf::Vector2f newPosition = sf::Vector2f((velocity.x * deltaTime) + currentPosition.x, (velocity.y * deltaTime) + currentPosition.y);
+
+    setPosition(newPosition);
+}
+
+void CosmicBody::calculateVelocity(float deltaTime)
+{
+    sf::Vector2f newVelocity = sf::Vector2f((acceleration.x * deltaTime) + velocity.x, (acceleration.y * deltaTime) + velocity.y);
+
+    setVelocity(newVelocity);
+}
+void CosmicBody::calculateAcceleration()
+{
+    setAcceleration(sf::Vector2f(force.x / mass, force.y / mass));
+}
