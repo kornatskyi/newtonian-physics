@@ -21,7 +21,7 @@ public:
 
 private:
     float distnceBetweenTwoPoints(sf::Vector2f point1, sf::Vector2f point2);
-    float calcForce(float m1, float m2, float r);
+    float calcForce(float m1, float m2, float d);
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
     ////////////////////////////////////////////////////////////
@@ -34,6 +34,26 @@ private:
     float getPositionOnA1DimensionalPlot(CosmicBody &body);
     float deltaDisplacement(float speed, float time);
 
+    ////////////////////////////////////////////////////////////
+    /// @brief Calculate force vector between two body with masses and radius vector between them
+    /// Uses next formula:
+    ///
+    ///       G * (m1 * m2)    d->
+    /// F-> = _____________ * _____
+    ///         |d->|^2       |d->|
+    /// where G - gravity constant
+    /// m1 - mass of a firs body
+    /// m2 - mass of a secod body
+    /// d-> - displacement between two bodies
+    /// F-> - force vector between two bodies for body 1, -F-> would be force vector for body 2
+    /// @param mass1 mass of a firs body
+    /// @param mass1 mass of a secod body
+    /// @param displacement displacement
+    /// @return force vector for body 1
+    sf::Vector2f calculateForce(float mass1, float mass2, sf::Vector2f displacement);
+
+    sf::Vector2f calculateRadiusVector(sf::Vector2f point1, sf::Vector2f point2);
+
     CosmicBody body1;
     CosmicBody body2;
     sf::Vector2f center;
@@ -45,4 +65,5 @@ private:
     float secondConunt;
     float seconds;
     ::InformationDisplayer informationDisplayer;
+    int counter;
 };

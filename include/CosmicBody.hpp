@@ -19,7 +19,7 @@ public:
     sf::Vector2f getAcceleration();
     void setCenterPosition(sf::Vector2f position);
     sf::Vector2f getCenterPosition();
-    void applyForce(sf::Vector2f force);
+    void applyForce(sf::Vector2f experiencedForce);
     sf::Vector2f getForce();
     void functionOverTime(float deltaTime);
     void calculatePosition(float deltaTime);
@@ -30,5 +30,5 @@ private:
     float mass;
     sf::Vector2f velocity;
     sf::Vector2f acceleration;
-    sf::Vector2f force; // force aplyied to this body
+    sf::Vector2f experiencedForce; // experiencedForce aplyied to this body
 };
