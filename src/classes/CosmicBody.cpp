@@ -13,6 +13,13 @@ CosmicBody::CosmicBody(float radius, float mass)
     this->mass = mass;
 }
 
+CosmicBody::CosmicBody(float radius, float mass, sf::Vector2f position)
+{
+    this->setRadius(radius);
+    this->mass = mass;
+    setCenterPosition(position);
+}
+
 void CosmicBody::setCenterPosition(sf::Vector2f newPosition)
 {
     this->setPosition(sf::Vector2f(newPosition.x - this->getRadius(), newPosition.y - this->getRadius()));

@@ -31,7 +31,7 @@ int main()
 
     while (window.isOpen())
     {
-        mousePosition = sf::Mouse::getPosition(window);
+        // mousePosition = sf::Mouse::getPosition(window);
         gravitySystem.update();
 
         window.clear(BACKGROUND_COLOR);
