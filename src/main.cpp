@@ -16,10 +16,10 @@ int main()
 
     sf::Event event;
 
-    sf::Vector2u windowSize(1300, 900);
+    sf::Vector2u windowSize(1800, 1000);
 
     sf::RenderWindow window(sf::VideoMode(windowSize.x, windowSize.y), "My window");
-    window.setPosition(sf::Vector2i(2400, 50));
+    window.setPosition(sf::Vector2i(2000, 50));
 
     sf::Vector2i mousePosition;
 

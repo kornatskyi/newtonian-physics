@@ -21,8 +21,9 @@ public:
     sf::Vector2f getAcceleration();
     void setCenterPosition(sf::Vector2f position);
     sf::Vector2f getCenterPosition();
-    void applyForce(sf::Vector2f experiencedForce);
+    void addForce(sf::Vector2f experiencedForce);
     sf::Vector2f getForce();
+    void resetForce();
     void functionOverTime(float deltaTime);
     void calculatePosition(float deltaTime);
     void calculateVelocity(float deltaTime);
