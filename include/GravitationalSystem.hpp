@@ -14,6 +14,7 @@ class GravitationalSystem : public sf::Drawable, public sf::Transformable
 
 public:
     GravitationalSystem(sf::Vector2f center);
+    ~GravitationalSystem();
 
     void update();
 
@@ -54,8 +55,7 @@ private:
 
     sf::Vector2f calculateRadiusVector(sf::Vector2f point1, sf::Vector2f point2);
 
-    CosmicBody body1;
-    CosmicBody body2;
+    std::vector<CosmicBody> *bodies;
     sf::Vector2f center;
     const float GRAVITY_CONSTANT = 0.00000000006674f;
     sf::Time deltaTime;

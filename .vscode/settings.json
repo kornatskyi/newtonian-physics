@@ -62,7 +62,8 @@
         "codecvt": "cpp",
         "ratio": "cpp",
         "iomanip": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "cstring": "cpp"
     },
     "C_Cpp.intelliSenseEngineFallback": "Enabled"
 }

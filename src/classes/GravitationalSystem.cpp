@@ -1,29 +1,89 @@
 #include "../../include/CosmicBody.hpp"
 #include "../../include/GravitationalSystem.hpp"
+#include "../../include/data/SolarSystemBodiesData.hpp"
 
-GravitationalSystem::GravitationalSystem(sf::Vector2f center) : body1(30.f, 100000000000), body2(30.f, 1)
+const double SIZE_SCALE_FACTOR = -6.5;
+const double SUN_SIZE_SCALE_FACTOR = -8;
+
+const double TIME_INTERVAL = 0.00001;
+
+GravitationalSystem::GravitationalSystem(sf::Vector2f center)
 {
+    CosmicBody
+        sun(tenExp(sunData.radius, SUN_SIZE_SCALE_FACTOR), tenExp(sunData.mass), center),
+        mercury(tenExp(mercuryData.radius, SIZE_SCALE_FACTOR),
+                tenExp(mercuryData.mass),
+                sf::Vector2f(center.x, center.y - tenExp(mercuryData.orbitalRadius))),
+        venus(tenExp(venusData.radius, SIZE_SCALE_FACTOR),
+              tenExp(venusData.mass),
+              sf::Vector2f(center.x, center.y - tenExp(venusData.orbitalRadius))),
+        earth(tenExp(earthData.radius, SIZE_SCALE_FACTOR),
+              tenExp(earthData.mass),
+              sf::Vector2f(center.x, center.y - tenExp(earthData.orbitalRadius))),
+        mars(tenExp(marsData.radius, SIZE_SCALE_FACTOR),
+             tenExp(marsData.mass),
+             sf::Vector2f(center.x, center.y - tenExp(marsData.orbitalRadius))),
+        jupiter(tenExp(jupiterData.radius, SIZE_SCALE_FACTOR),
+                tenExp(jupiterData.mass),
+                sf::Vector2f(center.x, center.y - tenExp(jupiterData.orbitalRadius))),
+        saturn(tenExp(saturnData.radius, SIZE_SCALE_FACTOR),
+               tenExp(saturnData.mass),
+               sf::Vector2f(center.x, center.y - tenExp(saturnData.orbitalRadius))),
+        uranus(tenExp(uranusData.radius, SIZE_SCALE_FACTOR),
+               tenExp(uranusData.mass),
+               sf::Vector2f(center.x, center.y - tenExp(uranusData.orbitalRadius))),
+        neptun(tenExp(neptunData.radius, SIZE_SCALE_FACTOR),
+               tenExp(neptunData.mass),
+               sf::Vector2f(center.x, center.y - tenExp(neptunData.orbitalRadius)));
+
+    sun.setFillColor(sf::Color::Yellow);
+
+    mercury.setVelocity(sf::Vector2f(orbitalSpeed(mercuryData.siderealPeriod, mercuryData.orbitalRadius), 0));
+    mercury.setFillColor(sf::Color::White);
+
+    venus.setVelocity(sf::Vector2f(orbitalSpeed(venusData.siderealPeriod, venusData.orbitalRadius), 0));
+    venus.setFillColor(sf::Color::White);
+
+    earth.setVelocity(sf::Vector2f(orbitalSpeed(earthData.siderealPeriod, earthData.orbitalRadius), 0));
+    earth.setFillColor(sf::Color::White);
+
+    mars.setVelocity(sf::Vector2f(orbitalSpeed(marsData.siderealPeriod, marsData.orbitalRadius), 0));
+    mars.setFillColor(sf::Color::White);
+
+    jupiter.setVelocity(sf::Vector2f(orbitalSpeed(jupiterData.siderealPeriod, jupiterData.orbitalRadius), 0));
+    jupiter.setFillColor(sf::Color::White);
+
+    saturn.setVelocity(sf::Vector2f(orbitalSpeed(saturnData.siderealPeriod, saturnData.orbitalRadius), 0));
+    saturn.setFillColor(sf::Color::White);
+
+    uranus.setVelocity(sf::Vector2f(orbitalSpeed(uranusData.siderealPeriod, uranusData.orbitalRadius), 0));
+    uranus.setFillColor(sf::Color::White);
+
+    neptun.setVelocity(sf::Vector2f(orbitalSpeed(neptunData.siderealPeriod, neptunData.orbitalRadius), 0));
+    neptun.setFillColor(sf::Color::White);
+
     this->center = center;
     counter = 0;
 
-    body1.setFillColor(sf::Color(105, 143, 63));
-    body2.setFillColor(sf::Color(10, 18, 42));
-    setPositionOnA1DimensionalPlot(-50.f, body1);
-    setPositionOnA1DimensionalPlot(50.f, body2);
-    body2.setVelocity(sf::Vector2f(0.2, 0.1));
-
     secondConunt = 0.0f;
     seconds = 0.f;
+
+    bodies = new std::vector<CosmicBody>();
+    bodies->push_back(sun);
+    bodies->push_back(mercury);
+    bodies->push_back(venus);
+    bodies->push_back(earth);
+    bodies->push_back(mars);
+    bodies->push_back(jupiter);
+    bodies->push_back(saturn);
+    bodies->push_back(uranus);
+    bodies->push_back(neptun);
 }
 
-void GravitationalSystem::setPositionOnA1DimensionalPlot(float coordinate, CosmicBody &body)
+GravitationalSystem::~GravitationalSystem()
 {
-    body.setCenterPosition(sf::Vector2f(this->center.x + coordinate, this->center.y));
-}
-
-float GravitationalSystem::getPositionOnA1DimensionalPlot(CosmicBody &body)
-{
-    return body.getCenterPosition().x - this->center.x;
+    std::cout << "Destructor executed" << std::endl;
+    delete bodies;
 }
 
 float GravitationalSystem::distnceBetweenTwoPoints(sf::Vector2f point1, sf::Vector2f point2)
@@ -38,7 +98,6 @@ float GravitationalSystem::calcForce(float m1, float m2, float d)
 
 sf::Vector2f GravitationalSystem::calculateForce(float mass1, float mass2, sf::Vector2f d)
 {
-
     float absDisplacement = std::sqrt(std::pow(d.x, 2) + std::pow(d.y, 2));
     float absForce = ((GRAVITY_CONSTANT * mass1 * mass2) / (d.x * d.x + d.y * d.y));
     sf::Vector2f force(absForce * (d.x / absDisplacement), absForce * (d.y / absDisplacement));
@@ -47,12 +106,12 @@ sf::Vector2f GravitationalSystem::calculateForce(float mass1, float mass2, sf::V
 
 sf::Vector2f GravitationalSystem::calculateRadiusVector(sf::Vector2f point1, sf::Vector2f point2)
 {
-    return point1 - point2;
+    return point2 - point1;
 }
 
 void GravitationalSystem::update()
 {
-    if (counter > 10) // count 100 update loop iterations intead of using time class
+    if (counter > 100) // count 100 update loop iterations intead of using time class
     {
 
         deltaTime = clock.getElapsedTime();
@@ -60,28 +119,23 @@ void GravitationalSystem::update()
 
         seconds += deltaTime.asSeconds();
         informationDisplayer.setTextField("Seconds", "Seconds:" + std::to_string(seconds));
-        informationDisplayer.setTextField("positionBody1", "body1 position: x: " + InformationDisplayer::numberToString(body1.getPosition().x) + "  y:" + InformationDisplayer::numberToString(body1.getPosition().y));
-        informationDisplayer.setTextField("positionBody2", "body2 position: x: " + InformationDisplayer::numberToString(body2.getPosition().x) + "  y:" + InformationDisplayer::numberToString(body2.getPosition().y));
-        informationDisplayer.setTextField("forceBody1", "body1 experienced force: x: " + InformationDisplayer::numberToString(body1.getForce().x) + "  y:" + InformationDisplayer::numberToString(body1.getForce().y));
-        informationDisplayer.setTextField("forceBody2", "body2 experienced force: x: " + InformationDisplayer::numberToString(body2.getForce().x) + "  y:" + InformationDisplayer::numberToString(body2.getForce().y));
-        informationDisplayer.setTextField("velocityBody1", "body1 velocity: x: " + InformationDisplayer::numberToString(body1.getVelocity().x) + "  y:" + InformationDisplayer::numberToString(body1.getVelocity().y));
-        informationDisplayer.setTextField("velocityBody2", "body2 velocity: x: " + InformationDisplayer::numberToString(body2.getVelocity().x) + "  y:" + InformationDisplayer::numberToString(body2.getVelocity().y));
 
-        // draw bodies' names
-        informationDisplayer.setTextField("body1", "body1", body1.getPosition());
-        informationDisplayer.setTextField("body2", "body2", body2.getPosition());
-
-        sf::Vector2f d = calculateRadiusVector(body1.getPosition(), body2.getPosition());
-        sf::Vector2f force = calculateForce(body1.getMass(), body2.getMass(), d);
-        body1.applyForce(-force);
-        body2.applyForce(force);
-
-        // call time dependent functions on the bodies to calculate it's characteristics
-        // body1.functionOverTime(deltaTime.asMicroseconds());
-
-        // body2.functionOverTime(deltaTime.asMicroseconds());
-        body1.functionOverTime(1);
-        body2.functionOverTime(1);
+        for (long unsigned i = 0; i < bodies->size(); i++)
+        {
+            CosmicBody &currentBody = bodies->at(i);
+            currentBody.resetForce();
+            for (long unsigned j = 0; j < bodies->size(); j++)
+            {
+                CosmicBody &interactionBody = bodies->at(j);
+                if (&currentBody != &interactionBody)
+                {
+                    sf::Vector2f d = calculateRadiusVector(currentBody.getCenterPosition(), interactionBody.getCenterPosition());
+                    sf::Vector2f force = calculateForce(currentBody.getMass(), interactionBody.getMass(), d);
+                    currentBody.addForce(force);
+                }
+            }
+            currentBody.functionOverTime(TIME_INTERVAL);
+        }
 
         counter = 0;
     }
@@ -96,23 +150,24 @@ float GravitationalSystem::deltaDisplacement(float speed, float time)
 }
 void GravitationalSystem::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-    target.draw(body1, states);
-    target.draw(body2, states);
     target.draw(informationDisplayer, states);
-    // target.draw(planetSpeedText);
-    // target.draw(planetAccselerationText);
+
+    for (long unsigned int i = 0; i < bodies->size(); i++)
+    {
+        target.draw(bodies->at(i), states);
+    }
 
     // Draw a center
-    sf::CircleShape point(2.f);
-    point.setPosition(sf::Vector2f(center.x - 1, center.y - 1));
-    point.setFillColor(sf::Color::Black);
-    target.draw(point);
-    // Draw an axis
-    sf::RectangleShape axis(sf::Vector2f(1500.f, 2));
-    axis.setPosition(sf::Vector2f(center.x - 750.f, center.y - 1));
-    axis.setFillColor(sf::Color::Black);
+    // sf::CircleShape point(2.f);
+    // point.setPosition(sf::Vector2f(center.x - 1, center.y - 1));
+    // point.setFillColor(sf::Color::Black);
+    // target.draw(point);
+    // // Draw an axis
+    // sf::RectangleShape axis(sf::Vector2f(1500.f, 2));
+    // axis.setPosition(sf::Vector2f(center.x - 750.f, center.y - 1));
+    // axis.setFillColor(sf::Color::Black);
 
-    target.draw(axis);
+    // target.draw(axis);
 }
 
 void GravitationalSystem::setCenter(sf::Vector2f center)
