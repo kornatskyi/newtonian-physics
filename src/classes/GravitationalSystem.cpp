@@ -39,28 +39,28 @@ GravitationalSystem::GravitationalSystem(sf::Vector2f center)
     sun.setFillColor(sf::Color::Yellow);
 
     mercury.setVelocity(sf::Vector2f(orbitalSpeed(mercuryData.siderealPeriod, mercuryData.orbitalRadius), 0));
-    mercury.setFillColor(sf::Color::Red);
+    mercury.setFillColor(sf::Color::White);
 
     venus.setVelocity(sf::Vector2f(orbitalSpeed(venusData.siderealPeriod, venusData.orbitalRadius), 0));
-    venus.setFillColor(sf::Color::Black);
+    venus.setFillColor(sf::Color::White);
 
     earth.setVelocity(sf::Vector2f(orbitalSpeed(earthData.siderealPeriod, earthData.orbitalRadius), 0));
-    earth.setFillColor(sf::Color::Blue);
+    earth.setFillColor(sf::Color::White);
 
     mars.setVelocity(sf::Vector2f(orbitalSpeed(marsData.siderealPeriod, marsData.orbitalRadius), 0));
-    mars.setFillColor(sf::Color::Red);
+    mars.setFillColor(sf::Color::White);
 
     jupiter.setVelocity(sf::Vector2f(orbitalSpeed(jupiterData.siderealPeriod, jupiterData.orbitalRadius), 0));
-    jupiter.setFillColor(sf::Color::Red);
+    jupiter.setFillColor(sf::Color::White);
 
     saturn.setVelocity(sf::Vector2f(orbitalSpeed(saturnData.siderealPeriod, saturnData.orbitalRadius), 0));
-    saturn.setFillColor(sf::Color::Red);
+    saturn.setFillColor(sf::Color::White);
 
     uranus.setVelocity(sf::Vector2f(orbitalSpeed(uranusData.siderealPeriod, uranusData.orbitalRadius), 0));
-    uranus.setFillColor(sf::Color::Red);
+    uranus.setFillColor(sf::Color::White);
 
     neptun.setVelocity(sf::Vector2f(orbitalSpeed(neptunData.siderealPeriod, neptunData.orbitalRadius), 0));
-    neptun.setFillColor(sf::Color::Red);
+    neptun.setFillColor(sf::Color::White);
 
     this->center = center;
     counter = 0;
@@ -111,7 +111,7 @@ sf::Vector2f GravitationalSystem::calculateRadiusVector(sf::Vector2f point1, sf:
 
 void GravitationalSystem::update()
 {
-    if (counter > 10) // count 100 update loop iterations intead of using time class
+    if (counter > 100) // count 100 update loop iterations intead of using time class
     {
 
         deltaTime = clock.getElapsedTime();
