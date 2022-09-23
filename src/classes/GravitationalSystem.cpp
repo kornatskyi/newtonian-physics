@@ -3,37 +3,38 @@
 #include "../../include/data/SolarSystemBodiesData.hpp"
 
 const double SIZE_SCALE_FACTOR = -6.5;
+const double SUN_SIZE_SCALE_FACTOR = -8;
 
 const double TIME_INTERVAL = 0.00001;
 
 GravitationalSystem::GravitationalSystem(sf::Vector2f center)
 {
     CosmicBody
-        sun(multiplyByTenToThePower(sunData.radius, -8), multiplyByTenToThePower(sunData.mass), center),
-        mercury(multiplyByTenToThePower(mercuryData.radius, SIZE_SCALE_FACTOR),
-                multiplyByTenToThePower(mercuryData.mass),
-                sf::Vector2f(center.x, center.y - multiplyByTenToThePower(mercuryData.orbitalRadius))),
-        venus(multiplyByTenToThePower(venusData.radius, SIZE_SCALE_FACTOR),
-              multiplyByTenToThePower(venusData.mass),
-              sf::Vector2f(center.x, center.y - multiplyByTenToThePower(venusData.orbitalRadius))),
-        earth(multiplyByTenToThePower(earthData.radius, SIZE_SCALE_FACTOR),
-              multiplyByTenToThePower(earthData.mass),
-              sf::Vector2f(center.x, center.y - multiplyByTenToThePower(earthData.orbitalRadius))),
-        mars(multiplyByTenToThePower(marsData.radius, SIZE_SCALE_FACTOR),
-             multiplyByTenToThePower(marsData.mass),
-             sf::Vector2f(center.x, center.y - multiplyByTenToThePower(marsData.orbitalRadius))),
-        jupiter(multiplyByTenToThePower(jupiterData.radius, SIZE_SCALE_FACTOR),
-                multiplyByTenToThePower(jupiterData.mass),
-                sf::Vector2f(center.x, center.y - multiplyByTenToThePower(jupiterData.orbitalRadius))),
-        saturn(multiplyByTenToThePower(saturnData.radius, SIZE_SCALE_FACTOR),
-               multiplyByTenToThePower(saturnData.mass),
-               sf::Vector2f(center.x, center.y - multiplyByTenToThePower(saturnData.orbitalRadius))),
-        uranus(multiplyByTenToThePower(uranusData.radius, SIZE_SCALE_FACTOR),
-               multiplyByTenToThePower(uranusData.mass),
-               sf::Vector2f(center.x, center.y - multiplyByTenToThePower(uranusData.orbitalRadius))),
-        neptun(multiplyByTenToThePower(neptunData.radius, SIZE_SCALE_FACTOR),
-               multiplyByTenToThePower(neptunData.mass),
-               sf::Vector2f(center.x, center.y - multiplyByTenToThePower(neptunData.orbitalRadius)));
+        sun(tenExp(sunData.radius, SUN_SIZE_SCALE_FACTOR), tenExp(sunData.mass), center),
+        mercury(tenExp(mercuryData.radius, SIZE_SCALE_FACTOR),
+                tenExp(mercuryData.mass),
+                sf::Vector2f(center.x, center.y - tenExp(mercuryData.orbitalRadius))),
+        venus(tenExp(venusData.radius, SIZE_SCALE_FACTOR),
+              tenExp(venusData.mass),
+              sf::Vector2f(center.x, center.y - tenExp(venusData.orbitalRadius))),
+        earth(tenExp(earthData.radius, SIZE_SCALE_FACTOR),
+              tenExp(earthData.mass),
+              sf::Vector2f(center.x, center.y - tenExp(earthData.orbitalRadius))),
+        mars(tenExp(marsData.radius, SIZE_SCALE_FACTOR),
+             tenExp(marsData.mass),
+             sf::Vector2f(center.x, center.y - tenExp(marsData.orbitalRadius))),
+        jupiter(tenExp(jupiterData.radius, SIZE_SCALE_FACTOR),
+                tenExp(jupiterData.mass),
+                sf::Vector2f(center.x, center.y - tenExp(jupiterData.orbitalRadius))),
+        saturn(tenExp(saturnData.radius, SIZE_SCALE_FACTOR),
+               tenExp(saturnData.mass),
+               sf::Vector2f(center.x, center.y - tenExp(saturnData.orbitalRadius))),
+        uranus(tenExp(uranusData.radius, SIZE_SCALE_FACTOR),
+               tenExp(uranusData.mass),
+               sf::Vector2f(center.x, center.y - tenExp(uranusData.orbitalRadius))),
+        neptun(tenExp(neptunData.radius, SIZE_SCALE_FACTOR),
+               tenExp(neptunData.mass),
+               sf::Vector2f(center.x, center.y - tenExp(neptunData.orbitalRadius)));
 
     sun.setFillColor(sf::Color::Yellow);
 
@@ -119,14 +120,8 @@ void GravitationalSystem::update()
         seconds += deltaTime.asSeconds();
         informationDisplayer.setTextField("Seconds", "Seconds:" + std::to_string(seconds));
 
-        // sf::Vector2f d = calculateRadiusVector(body1.getPosition(), body2.getPosition());
-        // sf::Vector2f force = calculateForce(body1.getMass(), body2.getMass(), d);
-        // body1.addForce(-force);
-        // body2.addForce(force);
-
         for (long unsigned i = 0; i < bodies->size(); i++)
         {
-
             CosmicBody &currentBody = bodies->at(i);
             currentBody.resetForce();
             for (long unsigned j = 0; j < bodies->size(); j++)
@@ -141,29 +136,6 @@ void GravitationalSystem::update()
             }
             currentBody.functionOverTime(TIME_INTERVAL);
         }
-
-        // for (long unsigned int i = 0; i < bodies->size(); i++)
-        // {
-        //     for (long unsigned int j = 0; j < bodies->size(); j++)
-        //     {
-        //         if (&bodies->at(i) != &bodies->at(j))
-        //         {
-        //             sf::Vector2f d = calculateRadiusVector(bodies->at(i).getCenterPosition(), bodies->at(j).getCenterPosition());
-        //             sf::Vector2f force = calculateForce(bodies->at(i).getMass(), bodies->at(j).getMass(), d);
-        //             bodies->at(i).addForce(-force);
-        //             bodies->at(j).addForce(force);
-        //         }
-        //         bodies->at(i).functionOverTime(0.00001);
-        //         bodies->at(j).functionOverTime(0.00001);
-        //     }
-        // }
-
-        // call time dependent functions on the bodies to calculate it's characteristics
-        // body1.functionOverTime(deltaTime.asMicroseconds());
-
-        // body2.functionOverTime(deltaTime.asMicroseconds());
-        // body1.functionOverTime(1);
-        // body2.functionOverTime(1);
 
         counter = 0;
     }

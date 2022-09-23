@@ -7,7 +7,7 @@ double yearsToSeconds(double years)
 }
 
 // Mutiply a number by ten to the power. By default power is -9
-double multiplyByTenToThePower(double number, double power = -9)
+double tenExp(double number, double power = -9)
 {
   return number * pow(10, power);
 }
