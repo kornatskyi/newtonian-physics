@@ -8,6 +8,7 @@
 
 #include "CosmicBody.hpp"
 #include "InformationDisplayer.hpp"
+#include "BodyInformationDisplayer.hpp"
 
 class GravitationalSystem : public sf::Drawable, public sf::Transformable
 {
@@ -55,7 +56,7 @@ private:
 
     sf::Vector2f calculateRadiusVector(sf::Vector2f point1, sf::Vector2f point2);
 
-    std::vector<CosmicBody> *bodies;
+    std::vector<CosmicBody *> *bodies;
     sf::Vector2f center;
     const float GRAVITY_CONSTANT = 0.00000000006674f;
     sf::Time deltaTime;
@@ -66,4 +67,5 @@ private:
     float seconds;
     ::InformationDisplayer informationDisplayer;
     int counter;
+    std::vector<BodyInformationDisplayer *> bodyInfoDisplayers;
 };

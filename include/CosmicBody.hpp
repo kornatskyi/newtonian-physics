@@ -9,6 +9,7 @@
 class CosmicBody : public sf::CircleShape
 {
 public:
+    // CosmicBody();
     CosmicBody(float radius, float mass);
     CosmicBody(float radius, float mass, sf::Vector2f position);
 
@@ -20,7 +21,7 @@ public:
     void setAcceleration(sf::Vector2f acceleration);
     sf::Vector2f getAcceleration();
     void setCenterPosition(sf::Vector2f position);
-    sf::Vector2f getCenterPosition();
+    sf::Vector2f getCenterPosition() const;
     void addForce(sf::Vector2f experiencedForce);
     sf::Vector2f getForce();
     void resetForce();

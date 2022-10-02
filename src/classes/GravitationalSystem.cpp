@@ -1,6 +1,7 @@
 #include "../../include/CosmicBody.hpp"
 #include "../../include/GravitationalSystem.hpp"
 #include "../../include/data/SolarSystemBodiesData.hpp"
+#include "../../include/BodyInformationDisplayer.hpp"
 
 const double SIZE_SCALE_FACTOR = -6.5;
 const double SUN_SIZE_SCALE_FACTOR = -8;
@@ -9,58 +10,61 @@ const double TIME_INTERVAL = 0.00001;
 
 GravitationalSystem::GravitationalSystem(sf::Vector2f center)
 {
-    CosmicBody
-        sun(tenExp(sunData.radius, SUN_SIZE_SCALE_FACTOR), tenExp(sunData.mass), center),
-        mercury(tenExp(mercuryData.radius, SIZE_SCALE_FACTOR),
-                tenExp(mercuryData.mass),
-                sf::Vector2f(center.x, center.y - tenExp(mercuryData.orbitalRadius))),
-        venus(tenExp(venusData.radius, SIZE_SCALE_FACTOR),
-              tenExp(venusData.mass),
-              sf::Vector2f(center.x, center.y - tenExp(venusData.orbitalRadius))),
-        earth(tenExp(earthData.radius, SIZE_SCALE_FACTOR),
-              tenExp(earthData.mass),
-              sf::Vector2f(center.x, center.y - tenExp(earthData.orbitalRadius))),
-        mars(tenExp(marsData.radius, SIZE_SCALE_FACTOR),
-             tenExp(marsData.mass),
-             sf::Vector2f(center.x, center.y - tenExp(marsData.orbitalRadius))),
-        jupiter(tenExp(jupiterData.radius, SIZE_SCALE_FACTOR),
-                tenExp(jupiterData.mass),
-                sf::Vector2f(center.x, center.y - tenExp(jupiterData.orbitalRadius))),
-        saturn(tenExp(saturnData.radius, SIZE_SCALE_FACTOR),
-               tenExp(saturnData.mass),
-               sf::Vector2f(center.x, center.y - tenExp(saturnData.orbitalRadius))),
-        uranus(tenExp(uranusData.radius, SIZE_SCALE_FACTOR),
-               tenExp(uranusData.mass),
-               sf::Vector2f(center.x, center.y - tenExp(uranusData.orbitalRadius))),
-        neptun(tenExp(neptunData.radius, SIZE_SCALE_FACTOR),
-               tenExp(neptunData.mass),
-               sf::Vector2f(center.x, center.y - tenExp(neptunData.orbitalRadius)));
+    CosmicBody *sun = new CosmicBody(tenExp(sunData.radius, SUN_SIZE_SCALE_FACTOR), tenExp(sunData.mass), center);
+    CosmicBody *mercury = new CosmicBody(tenExp(mercuryData.radius, SIZE_SCALE_FACTOR),
+                                         tenExp(mercuryData.mass),
+                                         sf::Vector2f(center.x, center.y - tenExp(mercuryData.orbitalRadius)));
+    CosmicBody *venus = new CosmicBody(tenExp(venusData.radius, SIZE_SCALE_FACTOR),
+                                       tenExp(venusData.mass),
+                                       sf::Vector2f(center.x, center.y - tenExp(venusData.orbitalRadius)));
+    CosmicBody *earth = new CosmicBody(tenExp(earthData.radius, SIZE_SCALE_FACTOR),
+                                       tenExp(earthData.mass),
+                                       sf::Vector2f(center.x, center.y - tenExp(earthData.orbitalRadius)));
+    CosmicBody *mars = new CosmicBody(tenExp(marsData.radius, SIZE_SCALE_FACTOR),
+                                      tenExp(marsData.mass),
+                                      sf::Vector2f(center.x, center.y - tenExp(marsData.orbitalRadius)));
+    CosmicBody *jupiter = new CosmicBody(tenExp(jupiterData.radius, SIZE_SCALE_FACTOR),
+                                         tenExp(jupiterData.mass),
+                                         sf::Vector2f(center.x, center.y - tenExp(jupiterData.orbitalRadius)));
+    CosmicBody *saturn = new CosmicBody(tenExp(saturnData.radius, SIZE_SCALE_FACTOR),
+                                        tenExp(saturnData.mass),
+                                        sf::Vector2f(center.x, center.y - tenExp(saturnData.orbitalRadius)));
+    CosmicBody *uranus = new CosmicBody(tenExp(uranusData.radius, SIZE_SCALE_FACTOR),
+                                        tenExp(uranusData.mass),
+                                        sf::Vector2f(center.x, center.y - tenExp(uranusData.orbitalRadius)));
+    CosmicBody *neptun = new CosmicBody(tenExp(neptunData.radius, SIZE_SCALE_FACTOR),
+                                        tenExp(neptunData.mass),
+                                        sf::Vector2f(center.x, center.y - tenExp(neptunData.orbitalRadius)));
 
-    sun.setFillColor(sf::Color::Yellow);
+    sun->setFillColor(sf::Color::Yellow);
 
-    mercury.setVelocity(sf::Vector2f(orbitalSpeed(mercuryData.siderealPeriod, mercuryData.orbitalRadius), 0));
-    mercury.setFillColor(sf::Color::White);
+    mercury->setVelocity(sf::Vector2f(orbitalSpeed(mercuryData.siderealPeriod, mercuryData.orbitalRadius), 0));
+    mercury->setFillColor(sf::Color::White);
 
-    venus.setVelocity(sf::Vector2f(orbitalSpeed(venusData.siderealPeriod, venusData.orbitalRadius), 0));
-    venus.setFillColor(sf::Color::White);
+    venus->setVelocity(sf::Vector2f(orbitalSpeed(venusData.siderealPeriod, venusData.orbitalRadius), 0));
+    venus->setFillColor(sf::Color::White);
 
-    earth.setVelocity(sf::Vector2f(orbitalSpeed(earthData.siderealPeriod, earthData.orbitalRadius), 0));
-    earth.setFillColor(sf::Color::White);
+    std::cout << "Earth addres: " << &earth << std::endl;
+    BodyInformationDisplayer *earthInfoDispl = new BodyInformationDisplayer((*earth), "Earth");
+    bodyInfoDisplayers.push_back(earthInfoDispl);
 
-    mars.setVelocity(sf::Vector2f(orbitalSpeed(marsData.siderealPeriod, marsData.orbitalRadius), 0));
-    mars.setFillColor(sf::Color::White);
+    earth->setVelocity(sf::Vector2f(orbitalSpeed(earthData.siderealPeriod, earthData.orbitalRadius), 0));
+    earth->setFillColor(sf::Color::White);
 
-    jupiter.setVelocity(sf::Vector2f(orbitalSpeed(jupiterData.siderealPeriod, jupiterData.orbitalRadius), 0));
-    jupiter.setFillColor(sf::Color::White);
+    mars->setVelocity(sf::Vector2f(orbitalSpeed(marsData.siderealPeriod, marsData.orbitalRadius), 0));
+    mars->setFillColor(sf::Color::White);
 
-    saturn.setVelocity(sf::Vector2f(orbitalSpeed(saturnData.siderealPeriod, saturnData.orbitalRadius), 0));
-    saturn.setFillColor(sf::Color::White);
+    jupiter->setVelocity(sf::Vector2f(orbitalSpeed(jupiterData.siderealPeriod, jupiterData.orbitalRadius), 0));
+    jupiter->setFillColor(sf::Color::White);
 
-    uranus.setVelocity(sf::Vector2f(orbitalSpeed(uranusData.siderealPeriod, uranusData.orbitalRadius), 0));
-    uranus.setFillColor(sf::Color::White);
+    saturn->setVelocity(sf::Vector2f(orbitalSpeed(saturnData.siderealPeriod, saturnData.orbitalRadius), 0));
+    saturn->setFillColor(sf::Color::White);
 
-    neptun.setVelocity(sf::Vector2f(orbitalSpeed(neptunData.siderealPeriod, neptunData.orbitalRadius), 0));
-    neptun.setFillColor(sf::Color::White);
+    uranus->setVelocity(sf::Vector2f(orbitalSpeed(uranusData.siderealPeriod, uranusData.orbitalRadius), 0));
+    uranus->setFillColor(sf::Color::White);
+
+    neptun->setVelocity(sf::Vector2f(orbitalSpeed(neptunData.siderealPeriod, neptunData.orbitalRadius), 0));
+    neptun->setFillColor(sf::Color::White);
 
     this->center = center;
     counter = 0;
@@ -68,7 +72,7 @@ GravitationalSystem::GravitationalSystem(sf::Vector2f center)
     secondConunt = 0.0f;
     seconds = 0.f;
 
-    bodies = new std::vector<CosmicBody>();
+    bodies = new std::vector<CosmicBody *>();
     bodies->push_back(sun);
     bodies->push_back(mercury);
     bodies->push_back(venus);
@@ -122,11 +126,11 @@ void GravitationalSystem::update()
 
         for (long unsigned i = 0; i < bodies->size(); i++)
         {
-            CosmicBody &currentBody = bodies->at(i);
+            CosmicBody &currentBody = *bodies->at(i);
             currentBody.resetForce();
             for (long unsigned j = 0; j < bodies->size(); j++)
             {
-                CosmicBody &interactionBody = bodies->at(j);
+                CosmicBody &interactionBody = *bodies->at(j);
                 if (&currentBody != &interactionBody)
                 {
                     sf::Vector2f d = calculateRadiusVector(currentBody.getCenterPosition(), interactionBody.getCenterPosition());
@@ -152,9 +156,15 @@ void GravitationalSystem::draw(sf::RenderTarget &target, sf::RenderStates states
 {
     target.draw(informationDisplayer, states);
 
+    for (auto displ : bodyInfoDisplayers)
+    {
+        displ->update();
+        target.draw(*displ, states);
+    }
+
     for (long unsigned int i = 0; i < bodies->size(); i++)
     {
-        target.draw(bodies->at(i), states);
+        target.draw(*bodies->at(i), states);
     }
 
     // Draw a center

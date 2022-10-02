@@ -63,7 +63,7 @@ for file_to_compile in ${files_to_compile[@]}; do
     echo "Compiling"
     file_name=$(basename $file_to_compile .cpp)
     echo $file_to_compile
-    g++ -Wall -Wextra -Werror -g -c $file_to_compile -o $OUT_PATH/$file_name.o
+    g++ -Wall -Wextra -Werror -g -O0 -c $file_to_compile -o $OUT_PATH/$file_name.o
     if [[ $? -ne 0 ]]; then
         echo "Failed"
         is_failed="true"

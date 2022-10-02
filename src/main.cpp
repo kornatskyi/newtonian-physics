@@ -12,8 +12,8 @@ int main()
 {
 
     // Settings
-    // const sf::Color BACKGROUND_COLOR = sf::Color(231, 222, 205);
-    const sf::Color BACKGROUND_COLOR = sf::Color::Black;
+    const sf::Color BACKGROUND_COLOR = sf::Color(139, 139, 139);
+    // const sf::Color BACKGROUND_COLOR = sf::Color::Black;
 
     sf::Event event;
 
