@@ -10,31 +10,33 @@ const double TIME_INTERVAL = 0.00001;
 
 GravitationalSystem::GravitationalSystem(sf::Vector2f center)
 {
-    CosmicBody *sun = new CosmicBody(tenExp(sunData.radius, SUN_SIZE_SCALE_FACTOR), tenExp(sunData.mass), center);
-    CosmicBody *mercury = new CosmicBody(tenExp(mercuryData.radius, SIZE_SCALE_FACTOR),
-                                         tenExp(mercuryData.mass),
-                                         sf::Vector2f(center.x, center.y - tenExp(mercuryData.orbitalRadius)));
-    CosmicBody *venus = new CosmicBody(tenExp(venusData.radius, SIZE_SCALE_FACTOR),
-                                       tenExp(venusData.mass),
-                                       sf::Vector2f(center.x, center.y - tenExp(venusData.orbitalRadius)));
-    CosmicBody *earth = new CosmicBody(tenExp(earthData.radius, SIZE_SCALE_FACTOR),
-                                       tenExp(earthData.mass),
-                                       sf::Vector2f(center.x, center.y - tenExp(earthData.orbitalRadius)));
-    CosmicBody *mars = new CosmicBody(tenExp(marsData.radius, SIZE_SCALE_FACTOR),
-                                      tenExp(marsData.mass),
-                                      sf::Vector2f(center.x, center.y - tenExp(marsData.orbitalRadius)));
-    CosmicBody *jupiter = new CosmicBody(tenExp(jupiterData.radius, SIZE_SCALE_FACTOR),
-                                         tenExp(jupiterData.mass),
-                                         sf::Vector2f(center.x, center.y - tenExp(jupiterData.orbitalRadius)));
-    CosmicBody *saturn = new CosmicBody(tenExp(saturnData.radius, SIZE_SCALE_FACTOR),
-                                        tenExp(saturnData.mass),
-                                        sf::Vector2f(center.x, center.y - tenExp(saturnData.orbitalRadius)));
-    CosmicBody *uranus = new CosmicBody(tenExp(uranusData.radius, SIZE_SCALE_FACTOR),
-                                        tenExp(uranusData.mass),
-                                        sf::Vector2f(center.x, center.y - tenExp(uranusData.orbitalRadius)));
-    CosmicBody *neptun = new CosmicBody(tenExp(neptunData.radius, SIZE_SCALE_FACTOR),
-                                        tenExp(neptunData.mass),
-                                        sf::Vector2f(center.x, center.y - tenExp(neptunData.orbitalRadius)));
+    CosmicBody *const sun = new CosmicBody(tenExp(sunData.radius, SUN_SIZE_SCALE_FACTOR),
+                                           tenExp(sunData.mass),
+                                           center);
+    CosmicBody *const mercury = new CosmicBody(tenExp(mercuryData.radius, SIZE_SCALE_FACTOR),
+                                               tenExp(mercuryData.mass),
+                                               sf::Vector2f(center.x, center.y - tenExp(mercuryData.orbitalRadius)));
+    CosmicBody *const venus = new CosmicBody(tenExp(venusData.radius, SIZE_SCALE_FACTOR),
+                                             tenExp(venusData.mass),
+                                             sf::Vector2f(center.x, center.y - tenExp(venusData.orbitalRadius)));
+    CosmicBody *const earth = new CosmicBody(tenExp(earthData.radius, SIZE_SCALE_FACTOR),
+                                             tenExp(earthData.mass),
+                                             sf::Vector2f(center.x, center.y - tenExp(earthData.orbitalRadius)));
+    CosmicBody *const mars = new CosmicBody(tenExp(marsData.radius, SIZE_SCALE_FACTOR),
+                                            tenExp(marsData.mass),
+                                            sf::Vector2f(center.x, center.y - tenExp(marsData.orbitalRadius)));
+    CosmicBody *const jupiter = new CosmicBody(tenExp(jupiterData.radius, SIZE_SCALE_FACTOR),
+                                               tenExp(jupiterData.mass),
+                                               sf::Vector2f(center.x, center.y - tenExp(jupiterData.orbitalRadius)));
+    CosmicBody *const saturn = new CosmicBody(tenExp(saturnData.radius, SIZE_SCALE_FACTOR),
+                                              tenExp(saturnData.mass),
+                                              sf::Vector2f(center.x, center.y - tenExp(saturnData.orbitalRadius)));
+    CosmicBody *const uranus = new CosmicBody(tenExp(uranusData.radius, SIZE_SCALE_FACTOR),
+                                              tenExp(uranusData.mass),
+                                              sf::Vector2f(center.x, center.y - tenExp(uranusData.orbitalRadius)));
+    CosmicBody *const neptun = new CosmicBody(tenExp(neptunData.radius, SIZE_SCALE_FACTOR),
+                                              tenExp(neptunData.mass),
+                                              sf::Vector2f(center.x, center.y - tenExp(neptunData.orbitalRadius)));
 
     sun->setFillColor(sf::Color::Yellow);
 
@@ -43,10 +45,6 @@ GravitationalSystem::GravitationalSystem(sf::Vector2f center)
 
     venus->setVelocity(sf::Vector2f(orbitalSpeed(venusData.siderealPeriod, venusData.orbitalRadius), 0));
     venus->setFillColor(sf::Color::White);
-
-    std::cout << "Earth addres: " << &earth << std::endl;
-    BodyInformationDisplayer *earthInfoDispl = new BodyInformationDisplayer((*earth), "Earth");
-    bodyInfoDisplayers.push_back(earthInfoDispl);
 
     earth->setVelocity(sf::Vector2f(orbitalSpeed(earthData.siderealPeriod, earthData.orbitalRadius), 0));
     earth->setFillColor(sf::Color::White);
@@ -65,6 +63,26 @@ GravitationalSystem::GravitationalSystem(sf::Vector2f center)
 
     neptun->setVelocity(sf::Vector2f(orbitalSpeed(neptunData.siderealPeriod, neptunData.orbitalRadius), 0));
     neptun->setFillColor(sf::Color::White);
+
+    // Create info displayers
+    BodyInformationDisplayer *sunInfoDispl = new BodyInformationDisplayer((*sun), "Sun");
+    bodyInfoDisplayers.push_back(sunInfoDispl);
+    BodyInformationDisplayer *mercuryInfoDispl = new BodyInformationDisplayer((*mercury), "Mercury");
+    bodyInfoDisplayers.push_back(mercuryInfoDispl);
+    BodyInformationDisplayer *venusInfoDispl = new BodyInformationDisplayer((*venus), "Venus");
+    bodyInfoDisplayers.push_back(venusInfoDispl);
+    BodyInformationDisplayer *earthInfoDispl = new BodyInformationDisplayer((*earth), "Earth");
+    bodyInfoDisplayers.push_back(earthInfoDispl);
+    BodyInformationDisplayer *marsInfoDispl = new BodyInformationDisplayer((*mars), "Mars");
+    bodyInfoDisplayers.push_back(marsInfoDispl);
+    BodyInformationDisplayer *jupiterInfoDispl = new BodyInformationDisplayer((*jupiter), "Jupiter");
+    bodyInfoDisplayers.push_back(jupiterInfoDispl);
+    BodyInformationDisplayer *saturnInfoDispl = new BodyInformationDisplayer((*saturn), "Saturn");
+    bodyInfoDisplayers.push_back(saturnInfoDispl);
+    BodyInformationDisplayer *uranusInfoDispl = new BodyInformationDisplayer((*uranus), "Uranus");
+    bodyInfoDisplayers.push_back(uranusInfoDispl);
+    BodyInformationDisplayer *neptunInfoDispl = new BodyInformationDisplayer((*neptun), "Neptun");
+    bodyInfoDisplayers.push_back(neptunInfoDispl);
 
     this->center = center;
     counter = 0;
@@ -154,30 +172,19 @@ float GravitationalSystem::deltaDisplacement(float speed, float time)
 }
 void GravitationalSystem::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
+    // Draw all information displayers
     target.draw(informationDisplayer, states);
-
     for (auto displ : bodyInfoDisplayers)
     {
         displ->update();
         target.draw(*displ, states);
     }
 
+    // Draw all bodies
     for (long unsigned int i = 0; i < bodies->size(); i++)
     {
         target.draw(*bodies->at(i), states);
     }
-
-    // Draw a center
-    // sf::CircleShape point(2.f);
-    // point.setPosition(sf::Vector2f(center.x - 1, center.y - 1));
-    // point.setFillColor(sf::Color::Black);
-    // target.draw(point);
-    // // Draw an axis
-    // sf::RectangleShape axis(sf::Vector2f(1500.f, 2));
-    // axis.setPosition(sf::Vector2f(center.x - 750.f, center.y - 1));
-    // axis.setFillColor(sf::Color::Black);
-
-    // target.draw(axis);
 }
 
 void GravitationalSystem::setCenter(sf::Vector2f center)

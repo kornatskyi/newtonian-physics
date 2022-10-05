@@ -7,20 +7,14 @@
 
 #include "../../include/CosmicBody.hpp"
 
-// CosmicBody::CosmicBody()
-// {
-// }
-
-CosmicBody::CosmicBody(float radius, float mass)
+CosmicBody::CosmicBody(float radius, float mass_) : mass(mass_)
 {
     this->setRadius(radius);
-    this->mass = mass;
 }
 
-CosmicBody::CosmicBody(float radius, float mass, sf::Vector2f position)
+CosmicBody::CosmicBody(float radius, float mass_, sf::Vector2f position) : mass(mass_)
 {
     this->setRadius(radius);
-    this->mass = mass;
     setCenterPosition(position);
 }
 
@@ -33,11 +27,11 @@ sf::Vector2f CosmicBody::getCenterPosition() const
     return sf::Vector2f(this->getPosition().x + this->getRadius(), this->getPosition().y + this->getRadius());
 }
 
-float CosmicBody::getMass()
+float CosmicBody::getMass() const
 {
     return this->mass;
 }
-sf::Vector2f CosmicBody::getVelocity()
+sf::Vector2f CosmicBody::getVelocity() const
 {
     return this->velocity;
 }
@@ -45,7 +39,7 @@ void CosmicBody::setVelocity(sf::Vector2f velocity)
 {
     this->velocity = velocity;
 }
-sf::Vector2f CosmicBody::getAcceleration()
+sf::Vector2f CosmicBody::getAcceleration() const
 {
     return this->acceleration;
 }
@@ -60,7 +54,7 @@ void CosmicBody::addForce(sf::Vector2f experiencedForce)
     this->experiencedForce.y = this->experiencedForce.y + experiencedForce.y;
 }
 
-sf::Vector2f CosmicBody::getForce()
+sf::Vector2f CosmicBody::getForce() const
 {
     return experiencedForce;
 }

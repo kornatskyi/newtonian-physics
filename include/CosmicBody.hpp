@@ -13,17 +13,18 @@ public:
     CosmicBody(float radius, float mass);
     CosmicBody(float radius, float mass, sf::Vector2f position);
 
-    float getMass();
-    void setSpeed(float speed);
-    float getSpeed();
-    void setVelocity(sf::Vector2f velocity);
-    sf::Vector2f getVelocity();
-    void setAcceleration(sf::Vector2f acceleration);
-    sf::Vector2f getAcceleration();
-    void setCenterPosition(sf::Vector2f position);
+    float getMass() const;
+    sf::Vector2f getVelocity() const;
+    float getSpeed() const;
+    sf::Vector2f getAcceleration() const;
     sf::Vector2f getCenterPosition() const;
+    sf::Vector2f getForce() const;
+
+    void setSpeed(float speed);
+    void setVelocity(sf::Vector2f velocity);
+    void setAcceleration(sf::Vector2f acceleration);
+    void setCenterPosition(sf::Vector2f position);
     void addForce(sf::Vector2f experiencedForce);
-    sf::Vector2f getForce();
     void resetForce();
     void functionOverTime(float deltaTime);
     void calculatePosition(float deltaTime);
@@ -31,7 +32,7 @@ public:
     void calculateAcceleration();
 
 private:
-    float mass;
+    const float mass;
     sf::Vector2f velocity;
     sf::Vector2f acceleration;
     sf::Vector2f experiencedForce; // experiencedForce aplyied to this body
